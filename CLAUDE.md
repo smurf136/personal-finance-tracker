@@ -1,3 +1,5 @@
+Project level: product
+
 ## Agent skills
 
 ### Issue tracker
