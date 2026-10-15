@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model Category {
+  id           String          @id
+  name         String
+  type         TransactionType
+  icon         String          @default("tag")
+  isArchived   Boolean         @default(false)
+  isFallback   Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  transactions Transaction[]
+
+  @@unique([type, name])
+}
+
+model Transaction {
+  id           String          @id
+  type         TransactionType
+  amountSatang BigInt
+  categoryId   String
+  category     Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  date         DateTime
+  note         String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([date])
+  @@index([type])
+  @@index([categoryId])
+}
