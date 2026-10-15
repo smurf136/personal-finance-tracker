@@ -1,16 +1,19 @@
 "use client";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { App, ConfigProvider } from "antd";
-import thTH from "antd/locale/th_TH";
+import { App } from "antd";
 import type { ReactNode } from "react";
+import { AppShell } from "@/components/AppShell/AppShell";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <AntdRegistry>
-      <ConfigProvider locale={thTH}>
-        <App>{children}</App>
-      </ConfigProvider>
+      <ThemeProvider>
+        <App>
+          <AppShell>{children}</AppShell>
+        </App>
+      </ThemeProvider>
     </AntdRegistry>
   );
 }
